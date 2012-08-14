@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Call Settings" android:key="call_settings">
+        <CheckBoxPreference
+        	android:key="mute_setting"
+        	android:title="Mute when BUSY"
+        	android:summary="The phone enters in Silent Mode when your status is BUSY"
+        	android:defaultValue="false"   
+        />
+        <CheckBoxPreference
+        	android:key="reject_setting"
+        	android:title="Reject calls when BUSY"
+        	android:summary="The phone reject any incoming calls when your status is BUSY"
+        	android:defaultValue="false"   
+        />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="User settings" android:key="user_settings">
+        <EditTextPreference 
+        	android:key="user_name"
+        	android:title="Name"
+        	android:dialogTitle="Enter your name"
+       	/>
+        <EditTextPreference 
+        	android:key="user_number"
+        	android:title="Phone number"
+        	android:dialogTitle="Enter your phone number"
+        	android:dialogMessage="Must contain only letters (no spaces or special characters)"
+       	/>
+    </PreferenceCategory>
+</PreferenceScreen>
+    

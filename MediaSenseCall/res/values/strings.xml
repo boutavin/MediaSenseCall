@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hej</string>
+    <string name="app_name">MediaSenseCall</string>
+    <string name="header_name">Alexandre (You)</string>
+<!-- <string name="header_name">Johan (You)</string> -->
+    <string name="header_phone">0703612088</string>
+<!-- <string name="header_phone">0768238156</string> -->
+    <string name="header_status">UNKNOWN</string>
+    <string name="contact_name">Name</string>
+    <string name="contact_phone">0701223344</string>
+    <string name="contact_status">UNKNOWN</string>
+
+</resources>
