@@ -96,7 +96,7 @@ public class MediaSenseCallActivity extends ListActivity implements OnClickListe
         	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 	        dialog.
 	        setMessage("No Internet Connection!").
-			setNeutralButton("OK", new DialogInterface.OnClickListener() { // give call
+			setNeutralButton("OK", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
@@ -107,7 +107,7 @@ public class MediaSenseCallActivity extends ListActivity implements OnClickListe
         query = new ContentResolverQueryHandler(this.getContentResolver());
         setListAdapter(getContactCursorAdapter()); // Populate the ListView thanks to the SimpleCursorAdapter for contacts
         
-		 // PhoneStateListener to monitor the state of the phone call, and restart this activity when call ends
+        // PhoneStateListener to monitor the state of the phone call, and restart this activity when call ends
 //		CallListener callListener = new CallListener(MediaSenseCallActivity.this, getListView().getFirstVisiblePosition());
 //		TelephonyManager telephonyManager = (TelephonyManager) MediaSenseCallActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
 //		telephonyManager.listen(callListener, PhoneStateListener.LISTEN_CALL_STATE);
@@ -189,8 +189,8 @@ public class MediaSenseCallActivity extends ListActivity implements OnClickListe
      * 
      * @param view			View to perform the change of status
      * @param contactNumber	Number to resolve
-     * @param showDialog	show dialog after completion (true) or not (false)
-     * @param context		current Context
+     * @param showDialog	Show dialog after completion (true) or not (false)
+     * @param context		Current Context
      * 
      * @see					Dialog if requested
      * 
@@ -221,16 +221,11 @@ public class MediaSenseCallActivity extends ListActivity implements OnClickListe
 			return view;
 		}
 		protected void onPostExecute(View view) {
-			/*
-			 * TO-DO:
-			 * If view not visible and receiving the response, then not doing anything
-			 * Tip: use listView.getFirstVisiblePosition(), getPosition(currentView) and listView.getLastVisiblePosition()
-			 */
 			FormatHandler.assignRightStatusAndColor(view, true, receivedStatus);
 			
 			if(showDialog){
-				contactName = ((TextView) view.findViewById(R.id.contactName)).getText().toString(); 		// get name
-		    	contactStatus = ((TextView) view.findViewById(R.id.contactStatus)).getText().toString(); 	// get status
+				contactName = ((TextView) view.findViewById(R.id.contactName)).getText().toString(); 		// Get name
+		    	contactStatus = ((TextView) view.findViewById(R.id.contactStatus)).getText().toString(); 	// Get status
 		    	
 		    	// Set message for AlertDialog according to the status
 		    	if(contactStatus.equalsIgnoreCase("FREE"))
@@ -246,7 +241,7 @@ public class MediaSenseCallActivity extends ListActivity implements OnClickListe
 		    	AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 		        dialog.setTitle("Call " +contactName+ " (" + contactNumber + " )").
 		        setMessage(message).
-				setPositiveButton("Yes, call!", new DialogInterface.OnClickListener() { // give call
+				setPositiveButton("Yes, call!", new DialogInterface.OnClickListener() { // Give call
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+contactNumber));
@@ -254,7 +249,7 @@ public class MediaSenseCallActivity extends ListActivity implements OnClickListe
 						dialog.dismiss();
 					}
 				}).
-				setNegativeButton("No, I'll try later", new DialogInterface.OnClickListener() { // dismiss AlertDialog
+				setNegativeButton("No, I'll try later", new DialogInterface.OnClickListener() { // Dismiss AlertDialog
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
@@ -402,7 +397,6 @@ public class MediaSenseCallActivity extends ListActivity implements OnClickListe
 	// When a GET request is received --> send back the status value to the source of the call
 	@Override
 	public void getEvent(String source, String uci) {
-//		performToast(source+ " : " +uci+ " : " +status);
 		platform.getDisseminationCore().notify(source, uci, status);
 	}
 	
