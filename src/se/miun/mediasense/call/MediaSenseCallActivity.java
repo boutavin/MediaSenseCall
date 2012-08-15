@@ -48,12 +48,15 @@ public class MediaSenseCallActivity extends ListActivity implements OnClickListe
 	private SimpleCursorAdapter adapter; // SimpleCursorAdapter for ListView
 	private HashMap<String, String> statusMap; // HashMap - key: uci, value:status
 	private SharedPreferences prefs;
+
 	// MediaSense Platform Application Interfaces
 	private MediaSensePlatform platform;
 	private DisseminationCore core;
 	private PublishSubscribeExtension pse;
 	private String UCI;
     //////////////////////////////////////////
+
+    Handler handler; // Handler to check internet connection
 	
 	/** Called when the activity is first created. */
     @Override
@@ -92,17 +95,8 @@ public class MediaSenseCallActivity extends ListActivity implements OnClickListe
         pse.setSubscriptionEventListener(this);
         //////////////////////////////////////
         
-        if(!isOnline()){
-        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-	        dialog.
-	        setMessage("No Internet Connection!").
-			setNeutralButton("OK", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-				}
-			}).show();
-        }
+        handler = new Handler();
+        handler.postAtTime(new ConnectionThread(), SystemClock.uptimeMillis());
         
         query = new ContentResolverQueryHandler(this.getContentResolver());
         setListAdapter(getContactCursorAdapter()); // Populate the ListView thanks to the SimpleCursorAdapter for contacts
@@ -464,6 +458,34 @@ public class MediaSenseCallActivity extends ListActivity implements OnClickListe
 				Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 	}
 	
+	/*
+	 * Thread checking the internet connection each 10 seconds
+	 * 
+	 * @see	if no internet connection, display AlertDialog 
+	 */
+	private class ConnectionThread implements Runnable{
+		@Override
+		public void run() {
+			if(!isOnline()){
+				AlertDialog.Builder dialog = new AlertDialog.Builder(MediaSenseAndroidExampleActivity.this);
+		        dialog.
+		        setMessage("No Internet Connection!").
+				setNeutralButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						handler.postDelayed(new ConnectionThread(), 10000); // Check internet connection in 10 seconds
+					}
+				}).show();
+			}
+		}
+	}
+
+	/*
+	 * Check if phone has internet connection
+	 * 
+	 * @result	true if is online, false if not online
+	 */
 	public boolean isOnline() {
 	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
